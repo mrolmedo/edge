@@ -2,3 +2,4 @@ dependsOn:
   - name: metllb-metallb-ipppol
   - name: metllb-metallb
   - name: metllb-metallb-ingchart
+defaultNamespace: hello-kubernetes
