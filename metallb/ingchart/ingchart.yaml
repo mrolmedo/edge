@@ -6,10 +6,13 @@ metadata:
 spec:
   valuesContent: |-
     controller:
+      publishService:
+        enabled: true
       service:
         enabled: true
         type: LoadBalancer
         loadBalancerIP: "10.156.233.149"
+        externalTrafficPolicy: Local
       # This ensures NGINX handles the nip.io host headers correctly
       config:
         use-forwarded-headers: "true"
