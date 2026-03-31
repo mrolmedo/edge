@@ -1,0 +1,14 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-ingress-nginx
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    controller:
+      service:
+        type: LoadBalancer
+        loadBalancerIP: "10.156.233.149"
+      # This ensures NGINX handles the nip.io host headers correctly
+      config:
+        use-forwarded-headers: "true"
