@@ -1,0 +1,3 @@
+dependsOn:
+  - name: metallb-metallb-ipppol
+  - name: metallb-metallb
