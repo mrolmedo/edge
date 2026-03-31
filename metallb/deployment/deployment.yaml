@@ -1,84 +1,54 @@
 
-apiVersion: v1
-kind: Namespace
+
+# 1. Create the Self-Signed Issuer (Handles the HTTPS Certificate)
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
 metadata:
-  name: hello-kubernetes
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: hello-kubernetes
-  namespace: hello-kubernetes
-  labels:
-    app.kubernetes.io/name: hello-kubernetes
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: hello-kubernetes
-  namespace: hello-kubernetes
-  labels:
-    app.kubernetes.io/name: hello-kubernetes
+  name: selfsigned-issuer
 spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: hello-kubernetes
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: hello-kubernetes
-    spec:
-      serviceAccountName: hello-kubernetes
-      containers:
-        - name: hello-kubernetes
-          image: "paulbouwer/hello-kubernetes:1.10"
-          imagePullPolicy: IfNotPresent
-          ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          env:
-          - name: HANDLER_PATH_PREFIX
-            value: ""
-          - name: RENDER_PATH_PREFIX
-            value: ""
-          - name: KUBERNETES_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-          - name: KUBERNETES_POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: KUBERNETES_NODE_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: spec.nodeName
-          - name: CONTAINER_IMAGE
-            value: "paulbouwer/hello-kubernetes:1.10"
+  selfSigned: {}
+
 ---
+# 2. Update the App Service to ClusterIP
+# This releases the IP so the Ingress Controller can take it
 apiVersion: v1
 kind: Service
 metadata:
   name: hello-kubernetes
   namespace: hello-kubernetes
-  labels:
-    app.kubernetes.io/name: hello-kubernetes
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-    - port: 80
-      targetPort: http
-      protocol: TCP
-      name: http
+    - name: http
+      port: 80
+      targetPort: 8080
   selector:
-    app.kubernetes.io/name: hello-kubernetes
+    app: hello-kubernetes
+
+---
+# 3. Create the Ingress (The HTTPS + nip.io "Route")
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-kubernetes-ingress
+  namespace: hello-kubernetes
+  annotations:
+    cert-manager.io/cluster-issuer: "selfsigned-issuer"
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+  - hosts:
+    - hello.10.156.233.149.nip.io
+    secretName: hello-kubernetes-tls-cert
+  rules:
+  - host: hello.10.156.233.149.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hello-kubernetes
+            port:
+              number: 80
