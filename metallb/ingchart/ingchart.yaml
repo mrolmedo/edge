@@ -4,15 +4,21 @@ metadata:
   name: rke2-ingress-nginx
   namespace: kube-system
 spec:
-  valuesContent: |-
+  valuesContent: |
     controller:
+      watchIngressWithoutClass: true
       publishService:
         enabled: true
+      hostNetwork: false
+      dnsPolicy: ClusterFirst
+      hostPort:
+        enabled: false
+      kind: Deployment
+      replicaCount: 2
       service:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: "10.156.233.149"
-        externalTrafficPolicy: Local
-      # This ensures NGINX handles the nip.io host headers correctly
-      config:
-        use-forwarded-headers: "true"
+      ingressClassResource:
+        name: nginx-internal
+        controllerValue: "k8s.io/ingress-nginx-internal"
+        default: true
