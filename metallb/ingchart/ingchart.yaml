@@ -23,3 +23,5 @@ spec:
         name: nginx-internal
         controllerValue: "k8s.io/ingress-nginx-internal"
         default: true
+      config:
+        use-forwarded-headers: "true"
