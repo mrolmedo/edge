@@ -1,27 +1,24 @@
+defaultNamespace: cdi-system
+
 helm:
-  repo: https://suse-edge.github.io/charts
-  chart: cdi
-  version: 0.5.0
   releaseName: cdi
-  targetNamespace: cdi
-  takeOwnership: true
-  values:
-    config:
-      featureGates: "HonorWaitForFirstConsumer"
+  chart: "oci://registry.suse.com/edge/charts/cdi"
+  version: "305.0.1+up0.6.0"
+  # custom chart value overrides
+  values: {}
 
-# We move the instructions to the target level to be more explicit
-
-  # This is the "Magic" block that silences the Modified error
-  template:
-    diff:
-      comparePatches:
-      - kind: Role
-        name: cdi-operator
-        namespace: default
-        operations:
-        - {"op": "remove", "path": "/metadata/labels"}
-      - kind: RoleBinding
-        name: cdi-operator
-        namespace: default
-        operations:
-        - {"op": "remove", "path": "/metadata/labels"}
+# https://fleet.rancher.io/bundle-diffs
+diff:
+  comparePatches:
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    name: cdi-operator
+    namespace: cdi-system
+    operations:
+    - {"op":"remove", "path":"/metadata/labels"}
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    name: cdi-operator
+    namespace: cdi-system
+    operations:
+    - {"op":"remove", "path":"/metadata/labels"}
