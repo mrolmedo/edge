@@ -26,7 +26,18 @@ helm:
     # Example: you can customize the CDI configuration
     config:
       featureGates: "HonorWaitForFirstConsumer"
-
+diff:
+  comparePatches:
+  - kind: Role
+    name: cdi-operator
+    namespace: default # Adjust if the operator is in a different namespace
+    operations:
+    - {"op": "remove", "path": "/metadata/labels/app.kubernetes.io~1managed-by"}
+  - kind: RoleBinding
+    name: cdi-operator
+    namespace: default
+    operations:
+    - {"op": "remove", "path": "/metadata/labels/app.kubernetes.io~1managed-by"}
 # Define deployment targets
 targets:
 - name: local
