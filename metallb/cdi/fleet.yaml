@@ -1,0 +1,35 @@
+# fleet.yaml
+# Reference style: rancher/fleet-examples/single-cluster/helm/fleet.yaml
+
+helm:
+  # The URL for the Helm repository. 
+  # Note: SUSE Edge hosts their charts in a Git repo that acts as a Helm repo.
+  repo: https://suse-edge.github.io/charts
+  
+  # The name of the chart in the repository
+  chart: cdi
+  
+  # The specific version you requested
+  version: 0.5.0
+  
+  # The release name for Helm
+  releaseName: cdi
+  
+  # The namespace where the chart should be installed
+  targetNamespace: cdi
+  
+  # Take ownership of existing resources if necessary
+  takeOwnership: true
+
+  # Override default values.yaml here
+  values:
+    # Example: you can customize the CDI configuration
+    config:
+      featureGates: "HonorWaitForFirstConsumer"
+
+# Define deployment targets
+targets:
+- name: local
+  clusterSelector:
+    matchLabels:
+      management.cattle.io/cluster-display-name: local
