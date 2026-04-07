@@ -30,14 +30,16 @@ diff:
   comparePatches:
   - kind: Role
     name: cdi-operator
-    namespace: default # Adjust if the operator is in a different namespace
+    namespace: default
     operations:
-    - {"op": "remove", "path": "/metadata/labels/app.kubernetes.io~1managed-by"}
+    - {"op": "remove", "path": "/metadata/labels"}
+    - {"op": "remove", "path": "/metadata/annotations"}
   - kind: RoleBinding
     name: cdi-operator
     namespace: default
     operations:
-    - {"op": "remove", "path": "/metadata/labels/app.kubernetes.io~1managed-by"}
+    - {"op": "remove", "path": "/metadata/labels"}
+    - {"op": "remove", "path": "/metadata/annotations"}
 # Define deployment targets
 targets:
 - name: local
