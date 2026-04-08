@@ -4,11 +4,11 @@ helm:
   repo: "https://suse-edge.github.io/charts"
   version: "0.13.10"
   releaseName: "metallb"
-#targetCustomizations:
-#- name: local
-#  clusterSelector:
-#    matchLabels:
-#      management.cattle.io/cluster-display-name: local
+targetCustomizations:
+- name: local
+  clusterSelector:
+    matchLabels:
+      management.cattle.io/cluster-display-name: metallb
 #  kustomize:
 #    dir: overlays/local
 # https://fleet.rancher.io/bundle-diffs
