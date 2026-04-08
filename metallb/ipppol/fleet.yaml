@@ -1,3 +1,3 @@
 defaultNamespace: metallb-system
 dependsOn:
-  - name: mlb-metall-mlb
+  - name: mlb-metallb-mlb
