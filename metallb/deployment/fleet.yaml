@@ -1,5 +1,5 @@
 dependsOn:
-  - name: metllb-metallb-ipppol
-  - name: metllb-metallb
-  - name: metllb-metallb-ingchart
+  - name: mlb-metallb-ipppol
+  - name: mlb-metallb-mlb
+  - name: mlb-metallb-ingchart
 defaultNamespace: hello-kubernetes
