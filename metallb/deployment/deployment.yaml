@@ -35,9 +35,10 @@ metadata:
   namespace: hello-kubernetes
   annotations:
     cert-manager.io/cluster-issuer: "selfsigned-issuer"
-    kubernetes.io/ingress.class: nginx-internal
+    #kubernetes.io/ingress.class: nginx-internal
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
+  ingressClassName: nginx-internal
   tls:
   - hosts:
     - hello.10.156.233.149.nip.io
