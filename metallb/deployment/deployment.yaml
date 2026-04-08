@@ -17,6 +17,7 @@ metadata:
   name: hello-kubernetes
   namespace: hello-kubernetes
 spec:
+  ingressClassName: nginx-internal
   type: ClusterIP
   ports:
     - name: http
