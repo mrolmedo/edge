@@ -22,3 +22,20 @@ diff:
     namespace: cdi-system
     operations:
     - {"op":"remove", "path":"/metadata/labels"}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cdi-uploadproxy-nodeport
+  namespace: cdi-system
+  labels:
+    cdi.kubevirt.io: "cdi-uploadproxy"
+spec:
+  type: NodePort
+  selector:
+    cdi.kubevirt.io: cdi-uploadproxy
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 8443
+      nodePort: 32111
