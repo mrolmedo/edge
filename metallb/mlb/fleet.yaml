@@ -9,8 +9,8 @@ targetCustomizations:
   clusterSelector:
     matchLabels:
       management.cattle.io/cluster-display-name: metallb
-#  kustomize:
-#    dir: overlays/local
+  kustomize:
+    dir: overlays/local
 # https://fleet.rancher.io/bundle-diffs
 diff:
   comparePatches:
