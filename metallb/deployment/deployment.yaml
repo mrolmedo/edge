@@ -40,10 +40,10 @@ spec:
   ingressClassName: nginx-internal
   tls:
   - hosts:
-    - hellokubernetes.support.rancher.space
-    secretName: hellokubernetes-tls-cert
+    - hello.10.156.233.149.nip.io
+    secretName: hello-kubernetes-tls-cert
   rules:
-  - host: hellokubernetes.support.rancher.space
+  - host: hello.10.156.233.149.nip.io
     http:
       paths:
       - path: /
