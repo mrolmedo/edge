@@ -41,7 +41,7 @@ spec:
   tls:
   - hosts:
     - hello.10.156.233.149.nip.io
-    - goodbay.10.156.233.149.nip.io
+    - myharbor.local
     secretName: nip-io-tls-secret
   rules:
   - host: hello.10.156.233.149.nip.io
