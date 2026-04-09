@@ -33,7 +33,7 @@ metadata:
   name: hello-kubernetes-ingress
   namespace: hello-kubernetes
   annotations:
-    #cert-manager.io/cluster-issuer: "selfsigned-issuer"
+    cert-manager.io/cluster-issuer: "selfsigned-issuer"
     #kubernetes.io/ingress.class: nginx-internal
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
@@ -42,7 +42,7 @@ spec:
   - hosts:
     - hello.10.156.233.149.nip.io
     - myharbor.local
-    secretName: nip-io-tls-secret
+    secretName: harborlocal
   rules:
   - host: hello.10.156.233.149.nip.io
     http:
