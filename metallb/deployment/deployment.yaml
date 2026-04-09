@@ -41,7 +41,8 @@ spec:
   tls:
   - hosts:
     - hello.10.156.233.149.nip.io
-    secretName: hello-kubernetes-tls-cert
+    - goodbay.10.156.233.149.nip.io
+    secretName: newhello-kubernetes-tls-cert
   rules:
   - host: hello.10.156.233.149.nip.io
     http:
