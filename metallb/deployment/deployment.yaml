@@ -50,7 +50,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: hellokubernetes.support.rancher.space
+            name: hello-kubernetes
             port:
               number: 80
 ---
