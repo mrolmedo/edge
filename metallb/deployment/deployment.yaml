@@ -41,7 +41,7 @@ spec:
   tls:
   - hosts:
     - hellokubernetes.support.rancher.space
-    secretName: hello-kubernetes-tls-cert
+    secretName: hellokubernetes-tls-cert
   rules:
   - host: hellokubernetes.support.rancher.space
     http:
