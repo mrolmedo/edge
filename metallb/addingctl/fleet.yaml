@@ -1,0 +1,11 @@
+# fleet.yaml
+# We define the helm strategy directly without wrapping in a Bundle resource
+targetNamespace: kube-system
+
+helm:
+  repo: https://rancher.github.io/rke2-charts
+  chart: rke2-ingress-nginx
+  version: 4.10.100 # Standard for v1.33.x
+  releaseName: nginx-external
+  valuesFiles:
+    - values.yaml
