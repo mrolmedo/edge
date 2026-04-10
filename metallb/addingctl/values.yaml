@@ -1,0 +1,28 @@
+# values.yaml
+controller:
+  # 1. Unique Identifier for v1.33.x IngressClass
+  ingressClassResource:
+    name: nginx-external
+    controllerValue: "k8s.io/ingress-nginx-external"
+    enabled: true
+    default: false 
+    
+  # 2. MUST be different from the default 'ingress-controller-leader'
+  electionID: ingress-controller-leader-external
+  
+  # 3. Networking & Behavior
+  watchIngressWithoutClass: false # Only handles Ingresses explicitly labeled 'nginx-external'
+  publishService:
+    enabled: true
+  hostNetwork: false
+  dnsPolicy: ClusterFirst
+  hostPort:
+    enabled: false
+  kind: Deployment
+  replicaCount: 2
+  
+  # 4. External IP Assignment
+  service:
+    enabled: true
+    type: LoadBalancer
+    loadBalancerIP: "10.156.233.150"
